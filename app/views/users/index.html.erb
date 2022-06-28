@@ -1,0 +1,47 @@
+<section class="container contain">
+  <div><h1>My Todo-list</h1></div>
+  <div class="option_button">
+  <button class="btn btn-dark" onclick="addTodo();"> Add </button>
+  <button class="btn btn-dark" onclick="deleteTodo();"> Delete </button>
+  </div>
+
+<div>
+  <div class="add_popup_box"  id="add_popup">
+    <form action="create" method="post">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    <input type="text" name="users[todo_text]" placeholder="What's next?" minlength="3" class="user_input_box" required>
+    <input type="date" class="input_date_box due_date" name="users[due_date]" required >
+      <button class="btn btn-dark cre_btn" type="submit" >Add</button>
+    </form>
+</div>
+  <form action="/delete" method="post" class="delete_popup_box" id="delete_popup">
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+    <input type="number" placeholder="Todo's id" name="del_id">
+    <button class="btn btn-dark del_btn" type="submit" >Delete</button>
+  </form>
+</div>
+</section>
+
+<div class="container contains">
+  <div><h4>Todo Id</h4></div>
+  <div> <h4>Created Date </h4></div>
+  <div> <h4>Need To do...</h4></div>
+    <div>  <h4>Due Date </h4></div>
+<!--  <div></div>-->
+<%@implement_list.each do |single_record|%>
+    <div><h6><%=single_record.id %></h6></div>
+    <div><h6><%=single_record.created_at.to_date %></h6></div>
+    <div><h6><%=single_record.todo_text %></h6></div>
+    <div><h6><%=single_record.due_date %></h6></div>
+<!--    <div></div>-->
+<% end %>
+  </div>
+
+<script>
+  function deleteTodo(){
+      document.getElementById("delete_popup").style.display = "block";
+  }
+  function addTodo(){
+      document.getElementById("add_popup").style.display = "flex";
+  }
+</script>
